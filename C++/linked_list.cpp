@@ -22,16 +22,23 @@ class List {
             head = NULL;
         }
 
-        void addNode(int data) {
-            if (head == NULL) {
+        void addNode(int data, int position = -1) {
+            if (head == NULL || position == 0) {
+                Node* next = head;
                 head = new Node(data);
+                head->next = next;
                 return;
             } else {
                 Node *next = head;
-                while (next->next != NULL) { 
+                Node *prevNext = next->next;
+                position--;
+                while (next->next != NULL && position !=0) { 
                     next = next->next;
+                    prevNext = next->next;
+                    position--;
                 }
                 next->next = new Node(data);
+                next->next->next = prevNext;
                 return;
             }
         }
@@ -56,11 +63,17 @@ int main() {
     list.iterateList();
     list.addNode(1);
     list.iterateList();
-    list.addNode(2);
+    list.addNode(0,0);
+    list.iterateList();
+    list.addNode(2,2);
+    list.iterateList();
+    list.addNode(5,3);
     list.iterateList();
     list.addNode(3);
     list.iterateList();
     list.addNode(4);
+    list.iterateList();
+    list.addNode(6,5);
     list.iterateList();
 
     return 0;
